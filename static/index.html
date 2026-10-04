@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🐧 Penguin Classifier</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+  <!-- ── NAVBAR ───────────────────────────────────────── -->
+  <header class="navbar">
+    <div class="navbar-brand">
+      <span class="brand-icon">🐧</span>
+      <span class="brand-text">PenguinAI</span>
+    </div>
+    <span class="navbar-badge">PyTorch · FastAPI</span>
+  </header>
+
+  <!-- ── HERO ─────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-inner">
+      <h1 class="hero-title">Penguen Türü Tahmin Et</h1>
+      <p class="hero-sub">
+        Ölçümleri girin, Tahmini yapalim!
+      </p>
+    </div>
+    <div class="penguin-row" aria-hidden="true">
+      <div class="penguin-card species-card" data-species="adelie">
+        <span class="p-emoji">🐧</span>
+        <span class="p-name">Adelie</span>
+      </div>
+      <div class="penguin-card species-card" data-species="chinstrap">
+        <span class="p-emoji">🐧</span>
+        <span class="p-name">Chinstrap</span>
+      </div>
+      <div class="penguin-card species-card" data-species="gentoo">
+        <span class="p-emoji">🐧</span>
+        <span class="p-name">Gentoo</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MAIN ─────────────────────────────────────────── -->
+  <main class="container">
+    <div class="card form-card">
+      <h2 class="card-title">📐 Ölçüm Girin</h2>
+
+      <form id="penguinForm">
+
+        <!-- Sayısal özellikler -->
+        <div class="form-grid">
+
+          <div class="field-group">
+            <label for="culmen_length_mm">
+              Gaga Uzunluğu
+              <span class="unit">(mm)</span>
+            </label>
+            <div class="input-wrap">
+              <input type="number" id="culmen_length_mm" step="0.1" min="30" max="65"
+                     placeholder="32 – 60" required />
+              <span class="input-icon">📏</span>
+            </div>
+            <span class="hint">Tipik aralık: 32 – 60 mm</span>
+          </div>
+
+          <div class="field-group">
+            <label for="culmen_depth_mm">
+              Gaga Derinliği
+              <span class="unit">(mm)</span>
+            </label>
+            <div class="input-wrap">
+              <input type="number" id="culmen_depth_mm" step="0.1" min="10" max="25"
+                     placeholder="13 – 22" required />
+              <span class="input-icon">📐</span>
+            </div>
+            <span class="hint">Tipik aralık: 13 – 22 mm</span>
+          </div>
+
+          <div class="field-group">
+            <label for="flipper_length_mm">
+              Yüzgeç Uzunluğu
+              <span class="unit">(mm)</span>
+            </label>
+            <div class="input-wrap">
+              <input type="number" id="flipper_length_mm" step="1" min="170" max="240"
+                     placeholder="172 – 235" required />
+              <span class="input-icon">🦾</span>
+            </div>
+            <span class="hint">Tipik aralık: 172 – 235 mm</span>
+          </div>
+
+          <div class="field-group">
+            <label for="body_mass_g">
+              Vücut Kütlesi
+              <span class="unit">(g)</span>
+            </label>
+            <div class="input-wrap">
+              <input type="number" id="body_mass_g" step="50" min="2500" max="6500"
+                     placeholder="2700 – 6300" required />
+              <span class="input-icon">⚖️</span>
+            </div>
+            <span class="hint">Tipik aralık: 2700 – 6300 g</span>
+          </div>
+
+        </div><!-- /form-grid -->
+
+        <!-- Kategorik özellikler -->
+        <div class="form-grid form-grid-2">
+
+          <div class="field-group">
+            <label>Ada</label>
+            <div class="chip-group" id="islandGroup">
+              <button type="button" class="chip" data-value="Biscoe">🏝 Biscoe</button>
+              <button type="button" class="chip" data-value="Dream">🌙 Dream</button>
+              <button type="button" class="chip" data-value="Torgersen">❄️ Torgersen</button>
+            </div>
+            <input type="hidden" id="island" required />
+          </div>
+
+          <div class="field-group">
+            <label>Cinsiyet</label>
+            <div class="chip-group" id="sexGroup">
+              <button type="button" class="chip" data-value="Female">♀ Female</button>
+              <button type="button" class="chip" data-value="Male">♂ Male</button>
+            </div>
+            <input type="hidden" id="sex" required />
+          </div>
+
+        </div><!-- /form-grid-2 -->
+
+        <button type="submit" class="btn-predict" id="submitBtn">
+          <span class="btn-icon">🔮</span>
+          Tahmin Et
+        </button>
+
+      </form>
+    </div><!-- /form-card -->
+
+    <!-- ── RESULT ───────────────────────────────────────── -->
+    <div class="card result-card hidden" id="resultCard">
+      <h2 class="card-title">🎯 Tahmin Sonucu</h2>
+
+      <div class="result-hero">
+        <div class="result-emoji" id="resultEmoji">🐧</div>
+        <div class="result-info">
+          <div class="result-species" id="resultSpecies">—</div>
+          <div class="result-confidence">
+            Güven: <strong id="resultConfidence">—</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Olasılık barları -->
+      <div class="prob-bars" id="probBars"></div>
+
+      <button class="btn-reset" id="resetBtn">↺ Yeniden Dene</button>
+    </div>
+
+    <!-- ── ERROR ────────────────────────────────────────── -->
+    <div class="card error-card hidden" id="errorCard">
+      <span class="error-icon">⚠️</span>
+      <p id="errorMsg">Bir hata oluştu.</p>
+    </div>
+
+  </main>
+
+  <!-- ── FOOTER ────────────────────────────────────────── -->
+  <footer class="footer">
+    <p>Penguin Dataset · PyTorch Neural Network · FastAPI Backend</p>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
