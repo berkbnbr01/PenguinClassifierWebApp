@@ -17,7 +17,17 @@ A web app that predicts penguin species (**Adelie**, **Chinstrap**, **Gentoo**) 
 | Task | Multi-class classification (3 species) |
 | Architecture | MLP: 8 → 16 → 16 → 3, ReLU activations |
 | Loss / Optimizer | CrossEntropyLoss / Adam |
-| Test accuracy | [%100] |
+| Test accuracy | 
+[Epoch 0 | Loss: 1.1111 | Acc: 21.98% | Test Loss: 1.0765 | Test Acc: 42.03%
+Epoch 20 | Loss: 0.3239 | Acc: 80.22% | Test Loss: 0.3182 | Test Acc: 79.71%
+Epoch 40 | Loss: 0.0475 | Acc: 98.90% | Test Loss: 0.0399 | Test Acc: 100.00%
+Epoch 60 | Loss: 0.0105 | Acc: 99.63% | Test Loss: 0.0018 | Test Acc: 100.00%
+Epoch 80 | Loss: 0.0061 | Acc: 100.00% | Test Loss: 0.0005 | Test Acc: 100.00%
+Epoch 100 | Loss: 0.0043 | Acc: 100.00% | Test Loss: 0.0003 | Test Acc: 100.00%
+Epoch 120 | Loss: 0.0032 | Acc: 100.00% | Test Loss: 0.0002 | Test Acc: 100.00%
+Epoch 140 | Loss: 0.0024 | Acc: 100.00% | Test Loss: 0.0002 | Test Acc: 100.00%
+Epoch 160 | Loss: 0.0019 | Acc: 100.00% | Test Loss: 0.0001 | Test Acc: 100.00%
+Epoch 180 | Loss: 0.0014 | Acc: 100.00% | Test Loss: 0.0001 | Test Acc: 100.00%] |
 
 ### Input features (8)
 
