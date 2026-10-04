@@ -32,32 +32,119 @@ body {
   flex-direction: column;
 }
 
-/* ── Navbar ─────────────────────────────────────── */
+/* ══════════════════════════════════════════════════
+   NAVBAR
+   ══════════════════════════════════════════════════ */
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 2rem;
-  background: rgba(26,29,39,.85);
-  backdrop-filter: blur(12px);
+  padding: 0 2rem;
+  height: 58px;
+  background: rgba(26,29,39,.90);
+  backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
   z-index: 100;
-}
-.navbar-brand { display: flex; align-items: center; gap: .5rem; }
-.brand-icon   { font-size: 1.5rem; }
-.brand-text   { font-size: 1.2rem; font-weight: 700; letter-spacing: .03em; }
-.navbar-badge {
-  font-size: .72rem;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  padding: .25rem .75rem;
-  border-radius: 999px;
-  font-weight: 600;
-  letter-spacing: .05em;
+  gap: 1rem;
 }
 
-/* ── Hero ───────────────────────────────────────── */
+/* Sol taraf: logo + dil seçici */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  flex-shrink: 0;
+}
+.brand-icon { font-size: 1.4rem; line-height: 1; }
+.brand-text {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: .02em;
+  white-space: nowrap;
+}
+
+/* Sağ taraf: badge */
+.navbar-badge {
+  font-size: .7rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  padding: .3rem .85rem;
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════════════
+   DİL SEÇİCİ — logo yanında
+   ══════════════════════════════════════════════════ */
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 0;
+}
+
+.lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  color: var(--text-muted);
+  font-size: .75rem;
+  font-weight: 700;
+  padding: .28rem .65rem;
+  cursor: pointer;
+  letter-spacing: .06em;
+  transition: background .18s, color .18s;
+  white-space: nowrap;
+}
+.lang-btn:hover {
+  color: var(--text);
+}
+.lang-btn.active {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(108,99,255,.4);
+}
+
+/* Renkli ülke noktası (emoji yerine) */
+.lang-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+  border: 1.5px solid rgba(255,255,255,.25);
+}
+.lang-dot-tr {
+  background: linear-gradient(135deg, #e30a17 50%, #e30a17 50%);
+  /* Türk kırmızısı */
+  background-color: #e30a17;
+}
+.lang-dot-en {
+  /* İngiliz mavisi */
+  background: linear-gradient(135deg, #012169 40%, #C8102E 60%);
+}
+
+/* Ayırıcı çizgi iki buton arasında */
+.lang-sep {
+  width: 1px;
+  height: 14px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════════════
+   HERO
+   ══════════════════════════════════════════════════ */
 .hero {
   padding: 3rem 2rem 2rem;
   text-align: center;
@@ -79,7 +166,6 @@ body {
   margin: 0 auto 2rem;
 }
 
-/* Species preview cards */
 .penguin-row {
   display: flex;
   justify-content: center;
@@ -102,7 +188,9 @@ body {
 .p-emoji { font-size: 2rem; }
 .p-name  { font-size: .8rem; font-weight: 600; color: var(--text-muted); letter-spacing: .08em; text-transform: uppercase; }
 
-/* ── Main container ─────────────────────────────── */
+/* ══════════════════════════════════════════════════
+   MAIN CONTAINER
+   ══════════════════════════════════════════════════ */
 .container {
   max-width: 800px;
   margin: 0 auto;
@@ -175,11 +263,7 @@ body {
   font-size: 1rem;
   pointer-events: none;
 }
-
-.hint {
-  font-size: .72rem;
-  color: var(--text-muted);
-}
+.hint { font-size: .72rem; color: var(--text-muted); }
 
 /* ── Chip buttons ───────────────────────────────── */
 .chip-group { display: flex; flex-wrap: wrap; gap: .5rem; }
@@ -226,23 +310,24 @@ body {
 .btn-predict:disabled { opacity: .55; cursor: not-allowed; transform: none; }
 .btn-icon { font-size: 1.2rem; }
 
-/* loading spinner inside button */
 .spinner {
   width: 18px; height: 18px;
   border: 2px solid rgba(255,255,255,.3);
   border-top-color: #fff;
   border-radius: 50%;
   animation: spin .7s linear infinite;
+  display: inline-block;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ── Result card ────────────────────────────────── */
+/* ══════════════════════════════════════════════════
+   RESULT CARD
+   ══════════════════════════════════════════════════ */
 .result-card { animation: fadeUp .4s ease; }
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
 .result-hero {
   display: flex;
   align-items: center;
@@ -264,7 +349,6 @@ body {
 .result-confidence { color: var(--text-muted); font-size: .95rem; margin-top: .2rem; }
 .result-confidence strong { color: var(--success); }
 
-/* Probability bars */
 .prob-bars { display: flex; flex-direction: column; gap: .9rem; margin-bottom: 1.5rem; }
 .prob-row { display: flex; flex-direction: column; gap: .3rem; }
 .prob-header { display: flex; justify-content: space-between; font-size: .82rem; }
@@ -279,7 +363,6 @@ body {
 }
 .prob-fill.winner { background: linear-gradient(90deg, var(--success), var(--accent2)); }
 
-/* Reset button */
 .btn-reset {
   background: transparent;
   border: 1px solid var(--border);
@@ -315,9 +398,12 @@ body {
   border-top: 1px solid var(--border);
 }
 
-/* ── Responsive ─────────────────────────────────── */
+/* ══════════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════════ */
 @media (max-width: 520px) {
+  .navbar { padding: 0 1rem; }
+  .navbar-badge { display: none; }
   .form-grid-2 { grid-template-columns: 1fr; }
   .result-hero { flex-direction: column; text-align: center; }
-  .navbar { padding: .75rem 1rem; }
 }
